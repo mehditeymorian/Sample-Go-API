@@ -33,7 +33,18 @@ func EditCustomer(c echo.Context) error {
 }
 
 func DeleteCustomer(c echo.Context) error {
-	return nil
+	id, err := strconv.Atoi(c.Param("cID"))
+
+	if err != nil {
+		return err
+	}
+
+	err = db.Database.Delete(int64(id))
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, responses.MsgResp("error (cID is not available)"))
+	}
+	return c.JSON(http.StatusOK, responses.MsgResp("success"))
 }
 
 func RetrieveCustomer(c echo.Context) error {
