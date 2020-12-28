@@ -52,7 +52,14 @@ func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Custom
 }
 
 func (db *ListDB) Delete(customerId int64) error {
+	for i, each := range db.customers {
+		if each.Id == customerId {
+			db.customers = append(db.customers[0:i], db.customers[i+1:]...)
+			return nil
+		}
+	}
 
+	return errors.New("customer not found")
 }
 
 func (db *ListDB) RetrieveAll() ([]model.Customer, error) {
