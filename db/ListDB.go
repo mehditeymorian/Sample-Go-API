@@ -51,8 +51,8 @@ func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Custom
 	return model.Customer{}, errors.New("customer not found")
 }
 
-func (db *ListDB) Delete() bool {
-	return false
+func (db *ListDB) Delete(customerId int64) error {
+
 }
 
 func (db *ListDB) RetrieveAll() ([]model.Customer, error) {
