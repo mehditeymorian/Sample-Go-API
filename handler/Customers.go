@@ -20,7 +20,12 @@ func CreateCustomer(c echo.Context) error {
 
 func EditCustomer(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	edited, err := db.Database.Edit(int64(id))
+	customer := new(model.Customer)
+	if err := c.Bind(customer); err != nil {
+		return err
+	}
+
+	edited, err := db.Database.Edit(int64(id), customer)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, responses.MsgResp("error (when cID is not available)"))
 	}
