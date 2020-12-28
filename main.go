@@ -15,7 +15,7 @@ func main() {
 	e.POST("/customers", handler.CreateCustomer)
 	e.PUT("/customers/:cID", handler.EditCustomer)
 	e.GET("/customers", handler.RetrieveCustomer)
-	e.DELETE("/customers/{cID}", handler.DeleteCustomer)
+	e.DELETE("/customers/:cID", handler.DeleteCustomer)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
