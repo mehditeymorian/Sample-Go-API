@@ -14,10 +14,7 @@ func CreateCustomer(c echo.Context) error {
 	if err := c.Bind(customer); err != nil {
 		return err
 	}
-	inserted, err := db.Database.Insert(customer)
-	if err != nil {
-		return c.JSON(http.StatusNotFound, responses.MsgResp("error (customers are not available)"))
-	}
+	inserted := db.Database.Insert(customer)
 	return c.JSON(http.StatusOK, responses.EchoResp(inserted, "success"))
 }
 
@@ -40,5 +37,9 @@ func DeleteCustomer(c echo.Context) error {
 }
 
 func RetrieveCustomer(c echo.Context) error {
-	return c.JSON(http.StatusOK, responses.RetrieveAllResp(db.Database.RetrieveAll(), "success"))
+	customers, err := db.Database.RetrieveAll()
+	if err != nil {
+		return c.JSON(http.StatusNotFound, responses.MsgResp("error (customers are not available)"))
+	}
+	return c.JSON(http.StatusOK, responses.RetrieveAllResp(customers, "success"))
 }
