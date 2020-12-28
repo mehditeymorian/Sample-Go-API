@@ -36,7 +36,7 @@ func (db *ListDB) Insert(customer *model.Customer) model.Customer {
 	return insertVal
 }
 
-func (db *ListDB) Edit(customerId int64) (model.Customer, error) {
+func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Customer, error) {
 	return model.Customer{}, nil
 }
 
