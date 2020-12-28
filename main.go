@@ -1,11 +1,14 @@
 package main
 
 import (
+	"GoServer/db"
 	"GoServer/handler"
 	"github.com/labstack/echo/v4"
 )
 
 func main() {
+	// init database
+	db.Database.Init()
 
 	e := echo.New()
 
