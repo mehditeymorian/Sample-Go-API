@@ -55,6 +55,9 @@ func (db *ListDB) Delete() bool {
 	return false
 }
 
-func (db *ListDB) RetrieveAll() []model.Customer {
-	return db.customers
+func (db *ListDB) RetrieveAll() ([]model.Customer, error) {
+	if len(db.customers) == 0 {
+		return nil, errors.New("no customer is stored.")
+	}
+	return db.customers, nil
 }
