@@ -13,7 +13,7 @@ func main() {
 	e := echo.New()
 
 	e.POST("/customers", handler.CreateCustomer)
-	e.PUT("PUT /customers/{cID}", handler.EditCustomer)
+	e.PUT("PUT /customers/:cID", handler.EditCustomer)
 	e.GET("/customers", handler.RetrieveCustomer)
 	e.DELETE("/customers/{cID}", handler.DeleteCustomer)
 
