@@ -22,3 +22,9 @@ func RetrieveAllResp(c []model.Customer, msg string) model.CustomerRetrieveResp 
 		Msg:       msg,
 	}
 }
+
+func MsgResp(msg string) model.Msg {
+	return model.Msg{
+		Msg: msg,
+	}
+}
