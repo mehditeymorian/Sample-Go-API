@@ -2,48 +2,48 @@ package db
 
 import (
 	"GoServer/model"
-	"encoding/json"
 	"time"
 )
 
 type ListDB struct {
 	customers []model.Customer
-	currentId int
+	currentId int64
 }
 
-func CreateListDB() ListDB {
-	return ListDB{
-		customers: nil,
+func CreateListDB() Layer {
+	return &ListDB{
+		customers: []model.Customer{},
 		currentId: 0,
 	}
 }
 
-func (db ListDB) Init() {
+func (db *ListDB) Init() {
 
 }
 
-func (db ListDB) Insert(customer *model.Customer) model.Customer {
-	currentTime := time.Now()
+func (db *ListDB) Insert(customer *model.Customer) model.Customer {
+
 	insertVal := model.Customer{
 		Name:         customer.Name,
 		Telephone:    customer.Telephone,
 		Address:      customer.Address,
-		Id:           json.Number(db.currentId),
-		RegisterDate: currentTime,
+		Id:           db.currentId,
+		RegisterDate: time.Now().Format("2006-01-02"),
 	}
 	db.customers = append(db.customers, insertVal)
-	db.currentId++
+	db.currentId = db.currentId + 1
+
 	return insertVal
 }
 
-func (db ListDB) Edit(customer model.Customer) model.Customer {
+func (db *ListDB) Edit(customer *model.Customer) model.Customer {
 	return model.Customer{}
 }
 
-func (db ListDB) Delete() bool {
+func (db *ListDB) Delete() bool {
 	return false
 }
 
-func (db ListDB) RetrieveAll() []model.Customer {
-	return nil
+func (db *ListDB) RetrieveAll() []model.Customer {
+	return db.customers
 }
