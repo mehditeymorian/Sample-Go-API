@@ -2,10 +2,12 @@ package db
 
 import "GoServer/model"
 
+var Database Layer = CreateListDB()
+
 type Layer interface {
-	init()
-	insert(customer model.Customer) model.Customer
-	edit(customer model.Customer) model.Customer
-	delete() bool
-	retrieveAll() []model.Customer
+	Init()
+	Insert(customer *model.Customer) model.Customer
+	Edit(customer model.Customer) model.Customer
+	Delete() bool
+	RetrieveAll() []model.Customer
 }
