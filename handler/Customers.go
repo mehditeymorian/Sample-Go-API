@@ -6,6 +6,7 @@ import (
 	"GoServer/responses"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"strconv"
 )
 
 func CreateCustomer(c echo.Context) error {
@@ -18,7 +19,12 @@ func CreateCustomer(c echo.Context) error {
 }
 
 func EditCustomer(c echo.Context) error {
-	return nil
+	id, _ := strconv.Atoi(c.Param("id"))
+	edited, err := db.Database.Edit(int64(id))
+	if err != nil {
+		return c.JSON(http.StatusNotFound, responses.MsgResp("error (when cID is not available)"))
+	}
+	return c.JSON(http.StatusOK, responses.EchoResp(edited, "success"))
 }
 
 func DeleteCustomer(c echo.Context) error {
