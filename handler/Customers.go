@@ -19,7 +19,7 @@ func CreateCustomer(c echo.Context) error {
 }
 
 func EditCustomer(c echo.Context) error {
-	id, _ := strconv.Atoi(c.Param("id"))
+	id, _ := strconv.Atoi(c.Param("cID"))
 	customer := new(model.Customer)
 	if err := c.Bind(customer); err != nil {
 		return err
