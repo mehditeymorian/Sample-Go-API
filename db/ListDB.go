@@ -2,6 +2,7 @@ package db
 
 import (
 	"GoServer/model"
+	"errors"
 	"time"
 )
 
@@ -37,7 +38,17 @@ func (db *ListDB) Insert(customer *model.Customer) model.Customer {
 }
 
 func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Customer, error) {
-	return model.Customer{}, nil
+
+	for i, each := range db.customers {
+		if each.Id == customerId {
+			db.customers[i].Name = customer.Name
+			db.customers[i].Address = customer.Address
+			db.customers[i].Telephone = customer.Telephone
+			return db.customers[i], nil
+		}
+	}
+
+	return model.Customer{}, errors.New("customer not found")
 }
 
 func (db *ListDB) Delete() bool {
