@@ -14,7 +14,10 @@ func CreateCustomer(c echo.Context) error {
 	if err := c.Bind(customer); err != nil {
 		return err
 	}
-	inserted := db.Database.Insert(customer)
+	inserted, err := db.Database.Insert(customer)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, responses.MsgResp("error (customers are not available)"))
+	}
 	return c.JSON(http.StatusOK, responses.EchoResp(inserted, "success"))
 }
 
@@ -27,7 +30,7 @@ func EditCustomer(c echo.Context) error {
 
 	edited, err := db.Database.Edit(int64(id), customer)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, responses.MsgResp("error (when cID is not available)"))
+		return c.JSON(http.StatusNotFound, responses.MsgResp("error (cID is not available)"))
 	}
 	return c.JSON(http.StatusOK, responses.EchoResp(edited, "success"))
 }
