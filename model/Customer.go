@@ -4,7 +4,7 @@ type Customer struct {
 	Name         string `json:"cName"`
 	Telephone    int64  `json:"cTel"`
 	Address      string `json:"cAddress"`
-	Id           int64  `json:"cId"`
+	Id           int64  `json:"cID"`
 	RegisterDate string `json:"cRegisterDate"`
 }
 
@@ -12,7 +12,7 @@ type CustomerInsertResp struct {
 	Name         string `json:"cName"`
 	Telephone    int64  `json:"cTel"`
 	Address      string `json:"cAddress"`
-	Id           int64  `json:"cId"`
+	Id           int64  `json:"cID"`
 	RegisterDate string `json:"cRegisterDate"`
 	Msg          string `json:"msg"`
 }
