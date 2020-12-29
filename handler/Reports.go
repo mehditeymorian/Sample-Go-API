@@ -9,6 +9,7 @@ import (
 	"strings"
 )
 
+// return report of specified month
 func MonthlyReport(c echo.Context) error {
 	month, _ := strconv.Atoi(c.Param("month"))
 	if month < 0 || month > 11 {
@@ -38,6 +39,10 @@ func MonthlyReport(c echo.Context) error {
 	return c.JSON(http.StatusOK, result)
 }
 
+/*
+	return reports of all months
+	if no customer found, return NoCustomerFound message
+*/
 func AnnualReport(c echo.Context) error {
 	customers, err := db.Database.RetrieveAll()
 

@@ -32,6 +32,7 @@ func CreatePostgresDB() *PostgresDB {
 }
 
 func (db *PostgresDB) Init() {
+	// create customer table
 	_ = db.connection.AutoMigrate(&model.Customer{})
 }
 
@@ -43,6 +44,7 @@ func (db *PostgresDB) Insert(customer *model.Customer) model.Customer {
 		Address:      customer.Address,
 		RegisterDate: time.Now().Format("2006-01-02"),
 	}
+	// insert customer to database
 	err := db.connection.Create(&insertVal).Error
 	fmt.Print(err)
 	return insertVal
@@ -53,16 +55,18 @@ func (db *PostgresDB) Edit(customerId int64, customer *model.Customer) (model.Cu
 	edited := model.Customer{
 		ID: customerId,
 	}
+	// find customer with given id
 	result := db.connection.First(&edited)
 
 	if result.RowsAffected == 0 {
 		return model.Customer{}, errors.New("customer not found")
 	}
 
+	// update fields
 	edited.Name = customer.Name
 	edited.Address = customer.Address
 	edited.Telephone = customer.Telephone
-
+	// save to database
 	db.connection.Save(&edited)
 
 	return edited, nil
@@ -73,6 +77,7 @@ func (db *PostgresDB) Delete(customerId int64) error {
 	deleted := model.Customer{
 		ID: customerId,
 	}
+	// delete customer with given id
 	result := db.connection.Delete(&deleted)
 
 	if result.RowsAffected == 0 {

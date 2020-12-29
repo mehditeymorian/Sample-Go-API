@@ -10,6 +10,7 @@ import (
 )
 
 func CreateCustomer(c echo.Context) error {
+	// convert request body to customer
 	customer := new(model.Customer)
 	if err := c.Bind(customer); err != nil {
 		return err
@@ -19,6 +20,7 @@ func CreateCustomer(c echo.Context) error {
 }
 
 func EditCustomer(c echo.Context) error {
+	// read id value from path and bind request body to customer
 	id, _ := strconv.Atoi(c.Param("cID"))
 	customer := new(model.Customer)
 	if err := c.Bind(customer); err != nil {
@@ -33,6 +35,7 @@ func EditCustomer(c echo.Context) error {
 }
 
 func DeleteCustomer(c echo.Context) error {
+	// read id value from path
 	id, err := strconv.Atoi(c.Param("cID"))
 
 	if err != nil {
@@ -48,6 +51,7 @@ func DeleteCustomer(c echo.Context) error {
 }
 
 func RetrieveCustomer(c echo.Context) error {
+	// read query parameter from path
 	nameLike := c.QueryParam("cName")
 	if len(nameLike) == 0 {
 		return retrieveAllCustomer(c)
@@ -64,6 +68,7 @@ func retrieveAllCustomer(c echo.Context) error {
 	return c.JSON(http.StatusOK, model.RetrieveAllResp(customers, "success"))
 }
 
+// return first customer when customer.Name start with <nameLike>
 func retrieveSingleCustomer(c echo.Context, nameLike string) error {
 
 	customers, err := db.Database.RetrieveAll()
