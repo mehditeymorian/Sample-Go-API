@@ -9,6 +9,7 @@ import (
 	"time"
 )
 
+// use to configure the connection between API and database server
 var host = "localhost"
 var user = "postgres"
 var pass = "admin"
