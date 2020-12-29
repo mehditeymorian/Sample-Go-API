@@ -12,6 +12,10 @@ import (
 func MonthlyReport(c echo.Context) error {
 	month, _ := strconv.Atoi(c.Param("month"))
 
+	if month > 11 {
+		return c.JSON(http.StatusBadRequest, "Months are zero base. range from 0 to 11")
+	}
+
 	customers, err := db.Database.RetrieveAll()
 
 	if err != nil {
