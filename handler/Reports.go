@@ -11,8 +11,7 @@ import (
 
 func MonthlyReport(c echo.Context) error {
 	month, _ := strconv.Atoi(c.Param("month"))
-
-	if month < 0 && month > 11 {
+	if month < 0 || month > 11 {
 		return c.JSON(http.StatusBadRequest, "Months are zero base. range from 0 to 11")
 	}
 
