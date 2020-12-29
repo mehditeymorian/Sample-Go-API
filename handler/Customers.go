@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 func CreateCustomer(c echo.Context) error {
@@ -52,4 +53,21 @@ func RetrieveAllCustomer(c echo.Context) error {
 		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
 	}
 	return c.JSON(http.StatusOK, model.RetrieveAllResp(customers, "success"))
+}
+
+func RetrieveCustomer(c echo.Context) error {
+	nameLike := c.QueryParam("cName")
+
+	customers, err := db.Database.RetrieveAll()
+	if err != nil {
+		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
+	}
+
+	for _, each := range customers {
+		if strings.HasPrefix(each.Name, nameLike) {
+			return c.JSON(http.StatusOK, each)
+		}
+	}
+
+	return c.JSON(http.StatusOK, "customer not found")
 }
