@@ -1,11 +1,19 @@
 package model
 
+import (
+	"gorm.io/gorm"
+	"time"
+)
+
 type Customer struct {
-	Name         string `json:"cName"`
-	Telephone    int64  `json:"cTel"`
-	Address      string `json:"cAddress"`
-	Id           int64  `json:"cID"`
-	RegisterDate string `json:"cRegisterDate"`
+	ID           int64          `json:"cID" gorm:"primaryKey"`
+	Name         string         `json:"cName"`
+	Telephone    int64          `json:"cTel"`
+	Address      string         `json:"cAddress"`
+	RegisterDate string         `json:"cRegisterDate"`
+	CreatedAt    time.Time      `json:"-"`
+	UpdatedAt    time.Time      `json:"-"`
+	DeletedAt    gorm.DeletedAt `json:"-" gorm:"index"`
 }
 
 type CustomerInsertResp struct {
@@ -28,7 +36,7 @@ func EchoResp(c Customer, msg string) CustomerInsertResp {
 		Name:         c.Name,
 		Telephone:    c.Telephone,
 		Address:      c.Address,
-		Id:           c.Id,
+		Id:           c.ID,
 		RegisterDate: c.RegisterDate,
 		Msg:          msg,
 	}
