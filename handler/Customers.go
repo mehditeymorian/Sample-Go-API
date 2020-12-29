@@ -46,7 +46,7 @@ func DeleteCustomer(c echo.Context) error {
 	return c.JSON(http.StatusOK, model.MsgResp("success"))
 }
 
-func RetrieveCustomer(c echo.Context) error {
+func RetrieveAllCustomer(c echo.Context) error {
 	customers, err := db.Database.RetrieveAll()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
