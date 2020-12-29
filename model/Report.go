@@ -12,6 +12,6 @@ type MonthInAnnualReport struct {
 }
 
 type AnnualReport struct {
-	Months []MonthlyReport `json:"months"`
-	Msg    string          `json:"msg"`
+	Months []MonthInAnnualReport `json:"months"`
+	Msg    string                `json:"msg"`
 }
