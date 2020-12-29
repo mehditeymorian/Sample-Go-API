@@ -28,7 +28,7 @@ func (db *ListDB) Insert(customer *model.Customer) model.Customer {
 		Name:         customer.Name,
 		Telephone:    customer.Telephone,
 		Address:      customer.Address,
-		Id:           db.currentId,
+		ID:           db.currentId,
 		RegisterDate: time.Now().Format("2006-01-02"),
 	}
 	db.customers = append(db.customers, insertVal)
@@ -40,7 +40,7 @@ func (db *ListDB) Insert(customer *model.Customer) model.Customer {
 func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Customer, error) {
 
 	for i, each := range db.customers {
-		if each.Id == customerId {
+		if each.ID == customerId {
 			db.customers[i].Name = customer.Name
 			db.customers[i].Address = customer.Address
 			db.customers[i].Telephone = customer.Telephone
@@ -53,7 +53,7 @@ func (db *ListDB) Edit(customerId int64, customer *model.Customer) (model.Custom
 
 func (db *ListDB) Delete(customerId int64) error {
 	for i, each := range db.customers {
-		if each.Id == customerId {
+		if each.ID == customerId {
 			db.customers = append(db.customers[0:i], db.customers[i+1:]...)
 			return nil
 		}
