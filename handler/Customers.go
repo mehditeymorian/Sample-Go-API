@@ -3,7 +3,6 @@ package handler
 import (
 	"GoServer/db"
 	"GoServer/model"
-	"GoServer/responses"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -15,7 +14,7 @@ func CreateCustomer(c echo.Context) error {
 		return err
 	}
 	inserted := db.Database.Insert(customer)
-	return c.JSON(http.StatusOK, responses.EchoResp(inserted, "success"))
+	return c.JSON(http.StatusOK, model.EchoResp(inserted, "success"))
 }
 
 func EditCustomer(c echo.Context) error {
@@ -27,9 +26,9 @@ func EditCustomer(c echo.Context) error {
 
 	edited, err := db.Database.Edit(int64(id), customer)
 	if err != nil {
-		return c.JSON(http.StatusNotFound, responses.MsgResp("error (cID is not available)"))
+		return c.JSON(http.StatusNotFound, model.MsgResp("error (cID is not available)"))
 	}
-	return c.JSON(http.StatusOK, responses.EchoResp(edited, "success"))
+	return c.JSON(http.StatusOK, model.EchoResp(edited, "success"))
 }
 
 func DeleteCustomer(c echo.Context) error {
@@ -42,15 +41,15 @@ func DeleteCustomer(c echo.Context) error {
 	err = db.Database.Delete(int64(id))
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, responses.MsgResp("error (cID is not available)"))
+		return c.JSON(http.StatusNotFound, model.MsgResp("error (cID is not available)"))
 	}
-	return c.JSON(http.StatusOK, responses.MsgResp("success"))
+	return c.JSON(http.StatusOK, model.MsgResp("success"))
 }
 
 func RetrieveCustomer(c echo.Context) error {
 	customers, err := db.Database.RetrieveAll()
 	if err != nil {
-		return c.JSON(http.StatusNotFound, responses.MsgResp("error (customers are not available)"))
+		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
 	}
-	return c.JSON(http.StatusOK, responses.RetrieveAllResp(customers, "success"))
+	return c.JSON(http.StatusOK, model.RetrieveAllResp(customers, "success"))
 }
