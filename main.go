@@ -17,5 +17,7 @@ func main() {
 	e.GET("/customers", handler.RetrieveCustomer)
 	e.DELETE("/customers/:cID", handler.DeleteCustomer)
 
+	e.GET("/report/:month", handler.MonthReport)
+
 	e.Logger.Fatal(e.Start(":8080"))
 }
