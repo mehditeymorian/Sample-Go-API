@@ -47,7 +47,16 @@ func DeleteCustomer(c echo.Context) error {
 	return c.JSON(http.StatusOK, model.MsgResp("success"))
 }
 
-func RetrieveAllCustomer(c echo.Context) error {
+func RetrieveCustomer(c echo.Context) error {
+	nameLike := c.QueryParam("cName")
+	if len(nameLike) == 0 {
+		return retrieveAllCustomer(c)
+	}
+
+	return retrieveSingleCustomer(c, nameLike)
+}
+
+func retrieveAllCustomer(c echo.Context) error {
 	customers, err := db.Database.RetrieveAll()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
@@ -55,8 +64,7 @@ func RetrieveAllCustomer(c echo.Context) error {
 	return c.JSON(http.StatusOK, model.RetrieveAllResp(customers, "success"))
 }
 
-func RetrieveCustomer(c echo.Context) error {
-	nameLike := c.QueryParam("cName")
+func retrieveSingleCustomer(c echo.Context, nameLike string) error {
 
 	customers, err := db.Database.RetrieveAll()
 	if err != nil {

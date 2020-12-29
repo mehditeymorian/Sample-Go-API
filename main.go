@@ -14,9 +14,8 @@ func main() {
 
 	e.POST("/customers", handler.CreateCustomer)
 	e.PUT("/customers/:cID", handler.EditCustomer)
-	e.GET("/customers", handler.RetrieveAllCustomer)
+	e.GET("/customers", handler.RetrieveCustomer)
 	e.DELETE("/customers/:cID", handler.DeleteCustomer)
-
 	e.GET("/report/:month", handler.MonthlyReport)
 	e.GET("/report", handler.AnnualReport)
 
