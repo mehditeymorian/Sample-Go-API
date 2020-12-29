@@ -9,12 +9,18 @@ import (
 	"time"
 )
 
+var host = "localhost"
+var user = "postgres"
+var pass = "admin"
+var dbname = "customers"
+var port = "5432"
+
 type PostgresDB struct {
 	connection *gorm.DB
 }
 
 func CreatePostgresDB() *PostgresDB {
-	dsn := "host=localhost user=postgres password=admin dbname=customers port=5432 sslmode=disable"
+	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s", host, user, pass, dbname, port)
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		panic("Failed to connect database")
