@@ -22,3 +22,22 @@ type CustomerRetrieveResp struct {
 	Customers []Customer `json:"customers"`
 	Msg       string     `json:"msg"`
 }
+
+func EchoResp(c Customer, msg string) CustomerInsertResp {
+	return CustomerInsertResp{
+		Name:         c.Name,
+		Telephone:    c.Telephone,
+		Address:      c.Address,
+		Id:           c.Id,
+		RegisterDate: c.RegisterDate,
+		Msg:          msg,
+	}
+}
+
+func RetrieveAllResp(c []Customer, msg string) CustomerRetrieveResp {
+	return CustomerRetrieveResp{
+		Size:      int64(len(c)),
+		Customers: c,
+		Msg:       msg,
+	}
+}
