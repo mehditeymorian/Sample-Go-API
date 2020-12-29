@@ -34,3 +34,32 @@ func MonthlyReport(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, result)
 }
+
+func AnnualReport(c echo.Context) error {
+	customers, err := db.Database.RetrieveAll()
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, model.MsgResp("no customer found"))
+	}
+
+	var count [12]int64
+	for _, each := range customers {
+		eachMonth, _ := strconv.Atoi(strings.Split(each.RegisterDate, "-")[1])
+		count[eachMonth-1]++
+	}
+
+	var months [12]model.MonthInAnnualReport
+	for i, eachMonthCustomers := range count {
+		months[i] = model.MonthInAnnualReport{
+			TotalCustomers: eachMonthCustomers,
+			Period:         int64(i),
+		}
+	}
+
+	result := model.AnnualReport{
+		Months: months,
+		Msg:    "success",
+	}
+
+	return c.JSON(http.StatusOK, result)
+}
