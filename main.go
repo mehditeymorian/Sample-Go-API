@@ -18,6 +18,7 @@ func main() {
 	e.DELETE("/customers/:cID", handler.DeleteCustomer)
 
 	e.GET("/report/:month", handler.MonthlyReport)
+	e.GET("/report", handler.AnnualReport)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
