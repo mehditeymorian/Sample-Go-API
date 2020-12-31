@@ -19,7 +19,7 @@ func MonthlyReport(c echo.Context) error {
 	customers, err := db.Database.RetrieveAll()
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, model.MsgResp("no customer found"))
+		return c.JSON(http.StatusNotFound, model.MsgResp("no customer available"))
 	}
 
 	count := 0

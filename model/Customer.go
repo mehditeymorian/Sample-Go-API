@@ -42,7 +42,7 @@ func EchoResp(c Customer, msg string) CustomerInsertResp {
 	}
 }
 
-func RetrieveAllResp(c []Customer, msg string) CustomerRetrieveResp {
+func RetrieveCustomersResp(c []Customer, msg string) CustomerRetrieveResp {
 	return CustomerRetrieveResp{
 		Size:      int64(len(c)),
 		Customers: c,
