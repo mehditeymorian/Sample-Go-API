@@ -57,7 +57,7 @@ func RetrieveCustomer(c echo.Context) error {
 		return retrieveAllCustomer(c)
 	}
 
-	return retrieveSingleCustomer(c, nameLike)
+	return retrieveSearchedCustomers(c, nameLike)
 }
 
 func retrieveAllCustomer(c echo.Context) error {
@@ -65,22 +65,27 @@ func retrieveAllCustomer(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
 	}
-	return c.JSON(http.StatusOK, model.RetrieveAllResp(customers, "success"))
+	return c.JSON(http.StatusOK, model.RetrieveCustomersResp(customers, "success"))
 }
 
 // return first customer when customer.Name start with <nameLike>
-func retrieveSingleCustomer(c echo.Context, nameLike string) error {
+func retrieveSearchedCustomers(c echo.Context, nameLike string) error {
 
 	customers, err := db.Database.RetrieveAll()
 	if err != nil {
 		return c.JSON(http.StatusNotFound, model.MsgResp("error (customers are not available)"))
 	}
 
+	var searchedCustomers []model.Customer
 	for _, each := range customers {
 		if strings.HasPrefix(each.Name, nameLike) {
-			return c.JSON(http.StatusOK, each)
+			searchedCustomers = append(searchedCustomers, each)
 		}
 	}
 
-	return c.JSON(http.StatusOK, "customer not found")
+	if searchedCustomers == nil {
+		return c.JSON(http.StatusNotFound, "No Customer Found")
+	}
+
+	return c.JSON(http.StatusOK, model.RetrieveCustomersResp(searchedCustomers, "success"))
 }
