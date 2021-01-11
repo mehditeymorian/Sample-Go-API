@@ -1,5 +1,6 @@
-#Internet Engineering Homework
-Write API for a vendor with non-persistent and persistent database.
+# Go API
+Write API for a vendor with non-persistent and persistent database. 
+this was one of the internet engineering lecture homeworks. [Link to Homework Description](https://github.com/mehditeymorian/Sample-Go-API/blob/master/hw4.pdf)
 
 
 
